@@ -2,7 +2,7 @@ from math import sqrt
 import pandas as pd
 
 
-df = pd.read_csv(r'E:\Python\solar_data\data\data.csv')
+df = pd.read_csv(r'C:\WorkSpace\PythonProjects\solar_model\data\data.csv')
 x_values = ["x1", "x2", "x3", "x1x2", "x2x3", "x1x3", "x1x2x3"]
 y_values = ['y1', 'y2', 'y3']
 y_avrg = df['y']
@@ -183,3 +183,75 @@ print('Критерий Фишера F =', F, ', табличный', Ft)
 if F < Ft:
     print('Расчетное значение ниже, следовательно полученное уравнение',
           'адекватно описывает исследуемый процесс')
+    
+
+x1 = 5.02  # инсоляция
+delta_x1 = 3.09
+
+x2 = 0.36  # площадь рабочей поверхности панели, м2
+delta_x2 = 0.16
+
+x3 = 45  # оптимальный угол наклона исходя из широты местности
+delta_x3 = 15
+
+x1_fiz_1 = 1 / delta_x1
+x1_fiz_2 = -(x1 / delta_x1)
+
+physic_coeffs = {
+    'x1': [1 / delta_x1, -(x1 / delta_x1)],
+    'x2': [1 / delta_x2, -(x2 / delta_x2)],
+    'x3': [1 / delta_x3, -(x3 / delta_x3)]
+}
+for key, value in physic_coeffs.items():
+    physic_coeffs[key][0] = round(value[0], 4)
+    physic_coeffs[key][1] = round(value[1], 4)
+
+calculate = {}
+for key, value in b_sign.items():
+    if key != 'b0':
+        calculate.update(
+            {
+                key: [value, value]
+            }
+        )
+    
+for key, value in physic_coeffs.items():
+    for item in calculate.keys():
+        if key in item:
+            calculate[item][0] *= value[0]
+            calculate[item][1] *= value[1]
+
+for key, value in calculate.items():
+    calculate[key][0] = round(value[0], 4)
+    calculate[key][1] = round(value[1], 4)
+
+print(physic_coeffs)
+print(calculate)
+
+result_calculate = {}
+b0 = b_sign['b0']
+for key, value in calculate.items():
+    print(b0, value[1], b0 + value[1])
+    b0 += value[1]
+    result_calculate.update(
+            {
+                'b0': b0,
+                key: value[0]
+            }
+        )
+result_calculate['b0'] = round(b0, 4)
+print(result_calculate)
+
+equal = f"y = {result_calculate['b0']}"
+
+for key, value in result_calculate.items():
+    if value > 0 and key != 'b0':
+        equal += ' + '
+        equal += str(value)
+        equal += key.replace('b', '')
+    elif value < 0 and key != 'b0':
+        equal += ' - '
+        equal += str(abs(value))
+        equal += key.replace('b', '')
+
+print(equal)
