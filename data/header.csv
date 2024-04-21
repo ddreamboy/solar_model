@@ -1,0 +1,22 @@
+-BEGIN HEADER-
+NASA/POWER CERES/MERRA2 Native Resolution Monthly and Annual 
+Dates (month/day/year): 01/01/2019 through 12/31/2020 
+Location: Regional 
+Elevation from MERRA-2: Average for 0.5 x 0.625 degree lat/lon region = na meters
+The value for missing source data that cannot be computed or is outside of the sources availability range: -999 
+Parameter(s): 
+PS                    MERRA-2 Surface Pressure (kPa) 
+WS2M                  MERRA-2 Wind Speed at 2 Meters (m/s) 
+WD10M                 MERRA-2 Wind Direction at 10 Meters (Degrees) 
+WD50M                 MERRA-2 Wind Direction at 50 Meters (Degrees) 
+WS10M                 MERRA-2 Wind Speed at 10 Meters (m/s) 
+WS50M                 MERRA-2 Wind Speed at 50 Meters (m/s) 
+WS10M_MAX             MERRA-2 Wind Speed at 10 Meters Maximum (m/s) 
+WS10M_MIN             MERRA-2 Wind Speed at 10 Meters Minimum (m/s) 
+WS50M_MAX             MERRA-2 Wind Speed at 50 Meters Maximum (m/s) 
+WS50M_MIN             MERRA-2 Wind Speed at 50 Meters Minimum (m/s) 
+WS10M_RANGE           MERRA-2 Wind Speed at 10 Meters Range (m/s) 
+WS50M_RANGE           MERRA-2 Wind Speed at 50 Meters Range (m/s) 
+ALLSKY_SFC_SW_DWN     CERES SYN1deg All Sky Surface Shortwave Downward Irradiance (kW-hr/m^2/day) 
+CLRSKY_SFC_SW_DWN     CERES SYN1deg Clear Sky Surface Shortwave Downward Irradiance (kW-hr/m^2/day) 
+-END HEADER-
