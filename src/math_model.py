@@ -2,7 +2,7 @@ from math import sqrt
 import pandas as pd
 
 
-df = pd.read_csv(r'C:\WorkSpace\PythonProjects\solar_model\data\data.csv')
+df = pd.read_csv(r'E:\Python\solar_model\data\data.csv')
 x_values = ["x1", "x2", "x3", "x1x2", "x2x3", "x1x3", "x1x2x3"]
 y_values = ['y1', 'y2', 'y3']
 y_avrg = df['y']
@@ -12,6 +12,7 @@ y_avrg = df['y']
 b = {
     'b0': y_avrg.sum() / 8
 }
+
 
 for x in x_values:
     bx = (df[x] * y_avrg).sum()
@@ -44,11 +45,11 @@ equal = f"y = {b['b0']}"
 for key, value in b.items():
     if value > 0 and key != 'b0':
         equal += ' + '
-        equal += str(value)
+        equal += str(value).replace('.', ',')
         equal += key.replace('b', '')
     elif value < 0 and key != 'b0':
         equal += ' - '
-        equal += str(abs(value))
+        equal += str(abs(value)).replace('.', ',')
         equal += key.replace('b', '')
 
 print(equal)
@@ -65,6 +66,8 @@ for y in y_values:
             f'|{y}-y|': dev_from_mean
         }
     )
+
+print()
 
 # квадраты отклонений
 for y in y_values:
@@ -161,6 +164,7 @@ for x in x_values:
     if x not in non_sign_coeffs:
         y_ += df[x] * b_sign[f'b{x}']
 y_: pd.Series = b_sign['b0'] + y_
+print('yu :', y_avrg.to_list())
 print('y_ :', y_.to_list())
 
 y_y_: pd.Series = abs(y_avrg - y_)
@@ -181,9 +185,9 @@ Ft = 5.29  # табличное значение критерия
 print('Критерий Фишера F =', F, ', табличный', Ft)
 
 if F < Ft:
-    print('Расчетное значение ниже, следовательно полученное уравнение',
+    print('Расчетное значение ниже, следовательно, полученное уравнение',
           'адекватно описывает исследуемый процесс')
-    
+
 
 x1 = 5.02  # инсоляция
 delta_x1 = 3.09
@@ -206,52 +210,55 @@ for key, value in physic_coeffs.items():
     physic_coeffs[key][0] = round(value[0], 4)
     physic_coeffs[key][1] = round(value[1], 4)
 
-calculate = {}
-for key, value in b_sign.items():
-    if key != 'b0':
-        calculate.update(
-            {
-                key: [value, value]
-            }
-        )
-    
-for key, value in physic_coeffs.items():
-    for item in calculate.keys():
-        if key in item:
-            calculate[item][0] *= value[0]
-            calculate[item][1] *= value[1]
+# calculate = {}
+# for key, value in b_sign.items():
+#     if key != 'b0':
+#         calculate.update(
+#             {
+#                 key: [value, value]
+#             }
+#         )
 
-for key, value in calculate.items():
-    calculate[key][0] = round(value[0], 4)
-    calculate[key][1] = round(value[1], 4)
+# for key, value in physic_coeffs.items():
+#     for item in calculate.keys():
+#         if key in item:
+#             calculate[item][0] *= value[0]
+#             calculate[item][1] *= value[1]
+
+# for key, value in calculate.items():
+#     calculate[key][0] = round(value[0], 4)
+#     calculate[key][1] = round(value[1], 4)
 
 print(physic_coeffs)
-print(calculate)
+# print(calculate)
 
-result_calculate = {}
-b0 = b_sign['b0']
-for key, value in calculate.items():
-    print(b0, value[1], b0 + value[1])
-    b0 += value[1]
-    result_calculate.update(
-            {
-                'b0': b0,
-                key: value[0]
-            }
-        )
-result_calculate['b0'] = round(b0, 4)
-print(result_calculate)
+# result_calculate = {}
+# b0 = b_sign['b0']
+# for key, value in calculate.items():
+#     print(b0, value[1], b0 + value[1])
+#     b0 += value[1]
+#     result_calculate.update(
+#             {
+#                 'b0': b0,
+#                 key: value[0]
+#             }
+#         )
+# result_calculate['b0'] = round(b0, 4)
+# print(result_calculate)
 
-equal = f"y = {result_calculate['b0']}"
+# equal = f"y = {result_calculate['b0']}"
 
-for key, value in result_calculate.items():
-    if value > 0 and key != 'b0':
-        equal += ' + '
-        equal += str(value)
-        equal += key.replace('b', '')
-    elif value < 0 and key != 'b0':
-        equal += ' - '
-        equal += str(abs(value))
-        equal += key.replace('b', '')
+# for key, value in result_calculate.items():
+#     if value > 0 and key != 'b0':
+#         equal += ' + '
+#         equal += str(value)
+#         equal += key.replace('b', '')
+#     elif value < 0 and key != 'b0':
+#         equal += ' - '
+#         equal += str(abs(value))
+#         equal += key.replace('b', '')
 
-print(equal)
+# print(equal)
+
+
+# y = -20.8 - 6.42x1 + 342.4x2 + 93.793x1x2 - 0.31x1x3 + 1.557x3

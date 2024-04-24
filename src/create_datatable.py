@@ -136,6 +136,9 @@ x3_list = [x3_min, x3_max]
 x_min = [x1_min, x2_min, x3_min]
 x_max = [x1_max, x2_max, x3_max]
 
+print(x_min)
+print(x_max)
+
 X_values = generate_combinations(x1_list, x2_list, x3_list)
 X_logic = logical_view(X_values, x_min, x_max)
 X_all_logic = add_logical_operations(X_logic)
