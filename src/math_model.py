@@ -150,11 +150,11 @@ equal = f"y = {b['b0']}"
 for key, value in b_sign.items():
     if value > 0 and key != 'b0':
         equal += ' + '
-        equal += str(value)
+        equal += str(value).replace('.', ',')
         equal += key.replace('b', '')
     elif value < 0 and key != 'b0':
         equal += ' - '
-        equal += str(abs(value))
+        equal += str(abs(value)).replace('.', ',')
         equal += key.replace('b', '')
 
 print(equal)
@@ -173,12 +173,16 @@ print('y-y_:', y_y_.to_list())
 y_y_2: pd.Series = round(y_y_**2, 2)
 print('(y-y_)^2:', y_y_2.to_list())
 
-# дисперсия адекватности
+# сумма какая то чего то
 SUM_y_y_2 = round(y_y_2.sum(), 2)
 print('SUM(y-y_)^2 =', SUM_y_y_2)
 
+# дисперсия адекватности
+Sad = round(SUM_y_y_2 / len(non_sign_coeffs), 2)
+print('sad =', Sad)
+
 # критерий Фишера
-F = round(SUM_y_y_2 / s2_y, 2)
+F = round(Sad / s2_y, 2)
 f1 = 3  # изначальное кол-во b минус оставшееся
 f2 = 16
 Ft = 5.29  # табличное значение критерия
@@ -261,4 +265,4 @@ print(physic_coeffs)
 # print(equal)
 
 
-# y = -20.8 - 6.42x1 + 342.4x2 + 93.793x1x2 - 0.31x1x3 + 1.557x3
+# y = -20,8 - 6,42x1 + 342,4x2 + 93,793x1x2 - 0,31x1x3 + 1,557x3
