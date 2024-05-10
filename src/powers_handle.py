@@ -45,4 +45,10 @@ powers = {
                 0.51, 0.52, 0.47, 0.36, 0.26, 0.20],
 }
 
+for key, value in powers.items():
+    for i in range(len(value)):
+        powers[key][i] = int(value[i] * 10**3)
+
+print(powers)
+
 process_lists(powers)
